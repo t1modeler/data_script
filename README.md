@@ -1,6 +1,5 @@
 # t1modeler data set preparation
 Source code for t1modeler.com datasets preparation
-t1modeler.com 数据准备脚本仓库
 
 The scripts in this repository faciliate the following tasks | 本代码仓库中的脚本完成以下任务:
 
