@@ -1,12 +1,14 @@
 # t1modeler data set preparation
-Source code for t1modeler datasets preparation
+Source code for t1modeler.com datasets preparation
+t1modeler.com 数据准备脚本仓库
 
-The scripts in this repository faciliate the following tasks:
-1. download data files from various web pages
-2. convert the data into pandas dataframe and binarize the target variable
-3. save the dataframe as CSV file which is ready for modeling on t1modeler.com
+The scripts in this repository faciliate the following tasks | 本代码仓库中的脚本完成以下任务:
 
-Find the source page for each dataset in the table below.
+1. download data file from one of the various web pages | 从各种不同的数据页面中下载原始文件
+2. convert the data into pandas dataframe and binarize the target variable | 将文件中的数据转换为 pandas 数据集并创建目标变量
+3. save the dataframe as CSV file which is ready for modeling on t1modeler.com | 将数据集保存为 CSV 文件，压缩后可上传至 t1modeler.com 进行模型开发
+
+Find the source page for each script in the table below | 表格内容为脚本与数据页面的对应关系
 
 | #  | File Name | Source Page |
 |----|-----------|-------------|
