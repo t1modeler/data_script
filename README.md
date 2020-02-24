@@ -1,4 +1,4 @@
-# data_script
+# t1modeler data set preparation
 Source code for t1modeler datasets preparation
 
 The scripts in this repository faciliate the following tasks:
