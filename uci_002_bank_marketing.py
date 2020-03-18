@@ -50,31 +50,23 @@ def download_file(url):
 # download data from UCI Machine Learning Repository
 data_train = download_file(url_data_train) if url_data_train.startswith('http') else url_data_train
 
-# unzip the downloaded file, get df_train and df_test
+# unzip the downloaded file, get df_train
 with zipfile.ZipFile(data_train) as myzip:
     with myzip.open('bank-full.csv') as myfile:
         df_train = pandas.read_csv(io.BytesIO(myfile.read()), delimiter = ';')
 
-    with myzip.open('bank.csv') as myfile:
-        df_test = pandas.read_csv(io.BytesIO(myfile.read()), delimiter = ';')
-
-# 2 dataframes will be concatenated for data processing, a "train_or_test" label makes it easier for separating them later
-df_train['train_or_test'] = 'train'
-df_test['train_or_test'] = 'test'
-df_total = pandas.concat([df_train, df_test]).reset_index(drop = True)
-
 # drop day and month, because they are not appropriate for modeling
-df_total = df_total.drop(['day', 'month'], axis = 1)
+df_train = df_train.drop(['day', 'month'], axis = 1)
 
 # set pdays = -1 to missing, avoid binning -1 with other scalar values when modeling
-df_total['pdays'] = df_total['pdays'].apply(lambda x: numpy.nan if x == -1 else x)
+df_train['pdays'] = df_train['pdays'].apply(lambda x: numpy.nan if x == -1 else x)
 
 # the target variable, y = 1 (yes) and y = 0 (no)
-df_total['target_y'] = df_total['y'].apply(lambda x: 1 if x == 'yes' else 0)
-df_total = df_total.drop('y', axis = 1)
+df_train['target_y'] = df_train['y'].apply(lambda x: 1 if x == 'yes' else 0)
+df_train = df_train.drop('y', axis = 1)
 
 # re-order the columns so that target_y becomes the first column
-df_total = df_total[[
+df_train = df_train[[
     'target_y',
     'age',
     'marital',
@@ -89,13 +81,7 @@ df_total = df_total[[
     'pdays',
     'previous',
     'poutcome',
-    'train_or_test',
     'job']]
 
-# separate train and test data samples, and drop the train_or_test label
-bank_marketing_train = df_total[df_total['train_or_test'] == 'train'].drop('train_or_test', axis = 1)
-bank_marketing_test = df_total[df_total['train_or_test'] == 'test'].drop('train_or_test', axis = 1)
-
-# save the 2 dataframes as CSV files, you can zip them respectively, upload them to t1modeler.com, and build a model
-bank_marketing_train.to_csv('uci_002_bank_marketing_train.csv', index = False)
-bank_marketing_test.to_csv('uci_002_bank_marketing_test.csv', index = False)
+# save the dataframe as CSV file, you can zip it, upload it to t1modeler.com, and build a model
+df_train.to_csv('uci_002_bank_marketing.csv', index = False)
